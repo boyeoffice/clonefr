@@ -5,7 +5,7 @@
 			<h3>Favourite (0)</h3>
 		</div><!-- end of col-xs-4-->
 		<div class="col-xs-6">
-		<post-viewer v-for="post in model.data" @update-post="fetchData" :url="url" :post="post" :key="model.data"></post-viewer>
+		<post-viewer v-for="post in model.data" @update-post="fetchData" :post="post" :key="model.data"></post-viewer>
 		</div>
 		</div>
 	</div>
@@ -17,8 +17,6 @@ import PostViewer from './PostViewer.vue'
 		components: { PostViewer },
 		data(){
 			return{
-				url: 'http://iclone.dev',
-				
 				model: {data:[]},
 				likeUser: ''
 			}

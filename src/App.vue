@@ -23,7 +23,7 @@ export default {
    },
   methods: {
     getUser(){
-      axios.get('http://iclone.dev/api/user').then(res => {
+      axios.get('api/user').then(res => {
         this.$store.commit('auth_user_data', res.data)
       })
     }

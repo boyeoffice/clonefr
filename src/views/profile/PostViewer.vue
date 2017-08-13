@@ -33,13 +33,16 @@
 
 <script>
 	export default {
-		props: ['post','url'],
+		props: ['post'],
 		data(){
 			return{
                form:{id: ''},
 			}
 		},
 		computed: {
+			url(){
+				return this.$store.state.url
+			},
 			likers() {
 				var likers = []
 				this.post.likes.forEach((like) => {

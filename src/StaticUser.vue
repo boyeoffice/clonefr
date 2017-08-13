@@ -3,7 +3,7 @@
 	<nav class="user-profile-top">
 		<div class="container">
 		 <div class="btn-block text-center"><a href="#" class="position">
-		 <img :src="'http://iclone.dev' + '/' + profile.user.avatar" class="img-circle border-avatar-profile" width="128" height="128">
+		 <img :src="url + '/' + profile.user.avatar" class="img-circle border-avatar-profile" width="128" height="128">
 		 </a>
 		 </div><!-- end btn-block -->
 		 <h3 class="w_text">{{profile.user.username}}</h3>
@@ -39,6 +39,9 @@
 		computed: {
 			auth_user(){
 				return this.$store.state.auth_user
+			},
+			url(){
+				return this.$store.state.url
 			}
 		},
 		data(){

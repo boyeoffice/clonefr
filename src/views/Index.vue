@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-	<div class="col-xs-4 col-lg-offset-4">
+	<div class="col-xs-5 col-lg-offset-4">
 		<div class="panel panel-default">
 		<div class="upload">
 			<input type="file" class="input-file" v-on:change="onFileChange">
@@ -34,7 +34,6 @@ import PostViewer from './posts/PostViewer.vue'
 				model: {data: []},
 				conUpload: false,
 				form: {image: '', content: '' },
-				url: 'http://clone.dev'
 			}
 		},
 		

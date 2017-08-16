@@ -52,6 +52,9 @@
 		mounted(){
 			this.getProfile()
 		},
+		watch:{
+			'$route': 'getProfile'
+		},
 		methods: {
 				getProfile(){
 					var vm = this

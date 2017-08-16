@@ -24,7 +24,9 @@ import PostViewer from './PostViewer.vue'
 		mounted(){
             this.fetchData()
 		},
-		
+		watch:{
+			'$route': 'fetchData'
+		},
 		methods: {
 			fetchData(){
 				var vm = this

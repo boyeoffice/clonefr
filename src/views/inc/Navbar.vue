@@ -21,7 +21,8 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                <li><router-link to="/account"> <i class="fa fa-user"></i> Account </router-link>
+                                <li><router-link :to="'/' + auth_user.username"> <i class="fa fa-user"></i> {{auth_user.username}} </router-link>
+                                <li><router-link to="/user/account"> <i class="fa fa-user"></i> Account </router-link>
                                  </li>
                                     <li>
                                         <a href="#" @click="logout"><i class="fa fa-sign-out"></i> Logout</a>

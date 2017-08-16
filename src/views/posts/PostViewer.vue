@@ -15,13 +15,16 @@
 	 	<div class="caption"><span class="post-comment">{{post.content}}</span></div><!--end caption -->
            <div class="caption">
     				<p class="actions">  
-    				    <span class="btn btn-xs pull-left btn-like likeButton" v-if="likeUser" @click="like">
-    						<i class="fa fa-heart"></i>
+    				    <span class="btn btn-xs pull-left btn-like likeButton" v-show="! isProcessing" v-if="likeUser" @click="like">
+    						  <i class="fa fa-heart"></i>
     					</span> 
-    					
-    					<span class="btn btn-xs pull-left  btn-like" v-else @click="like">
+    					<span class="btn btn-xs pull-left  btn-like" v-show="! isProcessing" v-if="! likeUser" @click="like">
     						<i class="fa fa-heart-o"></i>
-    					</span> 			    				
+    					</span>  
+    					<span class="btn btn-xs pull-left  btn-like" v-show="isProcessing">
+    						<i class="fa fa-spinner fa-spin"></i>
+    					</span> 
+
     					<span class="pull-right">
     						<i class="fa fa-heart myicon-right"></i> <span class="like_count myicon-right strongSpan">{{likers.length}}</span>
     						<i class="fa fa-eye myicon-right"></i> <span class="myicon-right strongSpan">6</span>
@@ -36,7 +39,8 @@
 		props: ['post'],
 		data(){
 			return{
-				form:{id: ''}
+				form:{id: ''},
+				isProcessing: false
 			}
 		},
 		computed: {
@@ -61,8 +65,10 @@
 		methods: {
 			like(){
 				this.form.id = this.post.id
+				this.isProcessing = true
 				axios.post('api/js/like', this.form).then(response => {
 						this.$emit('update-post')
+						this.isProcessing = false
 				})
 			}
 		}

@@ -10,6 +10,11 @@ a {
     color: #333;
     text-decoration: none;
     transition: 0.25s;
+    outline: none;
+}
+.btn:focus {
+    outline: none !important;
+    outline-offset: 0px !important;
 }
 .content {
   margin-top: 20px;
@@ -114,3 +119,4 @@ h1 {
   .likeButton {
       color: #e74c3c;
   }
+

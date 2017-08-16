@@ -4,7 +4,7 @@ import Vue from 'vue'
 Vue.use(Vuex)
 export const store = new Vuex.Store({
 	state: {
-		url: 'http://iclone.dev',
+		url: 'http://api.iclone.ga',
 		posts: [],
 		auth_user: {},
 		user_profile: {posts:[]}

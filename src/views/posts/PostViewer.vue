@@ -11,7 +11,7 @@
 	 	</p>
 	 </div>
 	 <a class="position-relative btn-block" href="#">
-    	<img title="Beach house" :src="url + post.image" min-height="200" class="image-url img-responsive btn-block"></a>
+    	<img :src="url + post.image" min-height="200" class="image-url img-responsive btn-block"></a>
 	 	<div class="caption"><span class="post-comment">{{post.content}}</span></div><!--end caption -->
            <div class="caption">
     				<p class="actions">  

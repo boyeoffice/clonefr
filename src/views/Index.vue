@@ -66,6 +66,7 @@ import PostViewer from './posts/PostViewer.vue'
           fetchPost(){
           	axios.get('api/post').then(response => {
           		this.model = response.data
+          		this.isLoading = false
           	})
           },
           uploadf(){

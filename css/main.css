@@ -2,6 +2,7 @@ body {
   height: 100%;
   width: 100%;
   background: #d2d6de;
+  padding-top: 50px;
 }
 body, .navbar-fixed-top, .navbar-fixed-bottom {
     min-width: 970px;

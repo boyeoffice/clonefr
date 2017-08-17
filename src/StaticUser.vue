@@ -8,7 +8,11 @@
 		 </div><!-- end btn-block -->
 		 <h3 class="w_text">{{profile.user.username}}</h3>
 		 <div class="btn-block text-center" v-if="profile.user.username == auth_user.username ">
-		 	<router-link to="/account" class="btn btn-default btn-follow-lg btn-sm"><i class="fa fa-pencil myicon-right"></i>   Edit Profile</router-link>
+		 	<router-link to="/user/account" class="btn btn-default btn-follow-lg btn-sm"><i class="fa fa-pencil myicon-right"></i>   Edit Profile</router-link>
+		 </div><!-- end btn-block -->
+		 <div class="btn-block text-center" v-else>
+		 	<a href="#" @click="follow" v-if="followUser" class="btn btn-default btn-follow-lg btn-sm">UnFollow</a>
+		 	<a href="#" @click="follow" v-else class="btn btn-default btn-follow-lg btn-sm">Follow</a>
 		 </div><!-- end btn-block -->
 		 <p class="subtitle-user text-center">{{profile.user.location}}</p>
 		</div>
@@ -21,9 +25,9 @@
 						<li class="active"><router-link :to="'/' + profile.user.username">Posts
 						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.total}}</small></router-link></li>
 						<li class=""><router-link :to="'/' + profile.user.username + '/followers'">Followers
-						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.total}}</small></router-link></li>
+						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.totalFollower}}</small></router-link></li>
 						<li class=""><router-link :to="'/' + profile.user.username + '/following'">Following
-						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.total}}</small></router-link></li>
+						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.totalFollowing}}</small></router-link></li>
 						<li class=""><a href="#">Favourite
 						<small class="btn-block sm-btn-size text-center counter-sm">{{profile.total}}</small></a></li>
 					</ul>
@@ -42,11 +46,26 @@
 			},
 			url(){
 				return this.$store.state.url
+			},
+			followers(){
+				var followers = []
+				this.profile.followers.forEach((followed) => {
+					followers.push(followed.follower)
+				})
+				return followers
+			},
+			followUser() {
+				var check_index = this.followers.indexOf(this.$store.state.auth_user.id)
+				if(check_index === -1)
+					return false
+				else
+					return true
 			}
 		},
 		data(){
 			return{
-				profile:{user:{}}
+				profile:{user:{}},
+				form:{id: ''}
 			}
 		},
 		mounted(){
@@ -60,6 +79,12 @@
 					var vm = this
 				axios.get('api/' + vm.$route.params.username).then(response => {
 				   this.profile = response.data
+				})
+			},
+			follow(){
+				this.form.id = this.profile.user.id
+				axios.post('api/js/follow', this.form).then(response => {
+					this.getProfile()
 				})
 			}
 		}

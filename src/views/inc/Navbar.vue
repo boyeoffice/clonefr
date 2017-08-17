@@ -1,5 +1,5 @@
 <template>
-	        <nav v-if="isAuth" class="navbar navbar-default navbar-static-top">
+	        <nav v-if="isAuth" class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <!-- Branding Image -->
@@ -9,7 +9,12 @@
                 </div>
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                       <form class="navbar-form navbar-left" role="search" autocomplete="off" action="http://shotpro.miguelvasquez.net/search" method="get">
+                          <div class="form-group">
+                        <input name="q" class="form-control" id="btnItems" placeholder="Search" type="text">
+                         <button type="submit" id="buttonSearch"><i class="fa fa-search"></i></button>
+                         </div><!--/.form-group -->
+                     </form>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -67,3 +72,23 @@
 		}
 	}
 </script>
+<style lang="scss">
+  .navbar-default .navbar-form {
+    border-color: transparent;
+}  
+.navbar-form {
+    width: auto;
+    border: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.navbar-form .form-control {
+    display: inline-block;
+    width: 500px;
+    vertical-align: middle;
+}
+</style>

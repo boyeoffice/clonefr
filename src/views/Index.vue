@@ -7,24 +7,25 @@
 			<p><i class="glyphicon glyphicon-camera"></i> </p>
 		</div>
 		</div>
-		<div v-if="conUpload" class="thumbnail col-thumb">
-			<div class="position-relative btn-block">
-			<img :src="form.image" height="200" class="img img-responsive">
+  <modal v-if="showModal" @close="showModal = false">
+    <div slot="body">
+			<img :src="form.image" height="250" class="img img-responsive">
+			<div style="margin-top: 10px;">
+			<textarea class="form-control" v-model="form.content" placeholder="Write a caption"></textarea>
+			</div>		
+	     </div><!-- end body -->
+	     <div slot="footer">
+			<button v-if="upButton" @click="Upload" class="btn btn-sm btn-primary">Upload</button>
+			<button v-if="!upButton" disabled="disabled" class="btn btn-sm btn-primary"><i class="fa fa-circle-o-notch fa-spin"></i></button>
 			</div>
-			<div class="caption form-group" style="margin-top: 10px;">
-			<input type="text"  v-model="form.content" class="form-control">
-			</div>
-			<div class="caption form-group">
-			<button v-if="upButton" @click="Upload" class="btn btn-primary">Upload</button>
-			<button v-if="!upButton" disabled="disabled" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin"></i></button>
-			</div>
-	 </div><!-- end upload -->
+  </modal>
      <post-viewer v-for="post in model.data" @update-post="fetchPost" :post="post" :key="model"></post-viewer>
 	</div><!-- end col-xs-4 -->
 </div>
 </template>
 
 <script>
+
 import PostViewer from './posts/PostViewer.vue'
 	export default {
 		components: { PostViewer },
@@ -32,8 +33,8 @@ import PostViewer from './posts/PostViewer.vue'
 			return{
 				upButton:true,
 				model: {data: []},
-				conUpload: false,
 				form: {image: '', content: '' },
+				showModal: false
 			}
 		},
 		
@@ -53,7 +54,7 @@ import PostViewer from './posts/PostViewer.vue'
               vm.form.image = e.target.result;
             };
             reader.readAsDataURL(file);
-            this.conUpload = true
+            this.showModal = true
           },
         Upload(){
         	var vm = this
@@ -61,17 +62,19 @@ import PostViewer from './posts/PostViewer.vue'
             axios.post('api/post', this.form).then(response => {
             	this.fetchPost()
             	this.uploadf()
+            	
             })
           },
           fetchPost(){
           	axios.get('api/post').then(response => {
           		this.model = response.data
           		this.isLoading = false
+
           	})
           },
           uploadf(){
-          	this.from = {image: '', content: ''},
-          	this.conUpload = false
+          	this.form = {image: '', content: ''},
+          	this.showModal = false
           	this.upButton = true
           }
 		}
@@ -105,4 +108,77 @@ import PostViewer from './posts/PostViewer.vue'
 	text-align: center;
 	margin-top: 1px;
 }
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 650px;
+  margin: 0px auto;
+  padding: 5px 5px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.modal-header {
+    padding: 10px;
+    border-bottom: 0px;
+    min-height: 16.428571429px;
+}
+.modal-footer {
+    padding: 10px;
+    min-height: 16.428571429px;
+}
+
 </style>
